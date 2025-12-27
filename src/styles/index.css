@@ -1,0 +1,40 @@
+@import './components.css';
+
+:root {
+  --admin-primary: #1890ff;
+  --admin-primary-hover: #40a9ff;
+  --admin-primary-active: #096dd9;
+  --admin-success: #52c41a;
+  --admin-warning: #faad14;
+  --admin-error: #ff4d4f;
+  --admin-info: #1890ff;
+  
+  --admin-text-primary: rgba(0, 0, 0, 0.85);
+  --admin-text-secondary: rgba(0, 0, 0, 0.65);
+  --admin-text-disabled: rgba(0, 0, 0, 0.25);
+  
+  --admin-border-color: #d9d9d9;
+  --admin-border-radius: 4px;
+  --admin-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  
+  --admin-bg: #f0f2f5;
+  --admin-bg-light: #ffffff;
+  --admin-bg-hover: #fafafa;
+  
+  --admin-sidebar-width: 256px;
+  --admin-header-height: 64px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+

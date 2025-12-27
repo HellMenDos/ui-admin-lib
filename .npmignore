@@ -1,0 +1,27 @@
+# Source files
+src/
+demo/
+example.md
+
+# Config files
+tsconfig.json
+tsconfig.node.json
+tsconfig.build.json
+vite.config.ts
+.eslintrc.cjs
+.gitignore
+
+# Development files
+*.log
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
