@@ -1,54 +1,51 @@
 # UI Admin Library
 
-Библиотека для быстрого создания административных панелей на React с полным CRUD функционалом. Создайте полноценную админку всего в несколько строк кода!
+Library for quickly creating admin panels in React with full CRUD functionality. Create a complete admin panel in just a few lines of code!
 
-## Установка
+## Installation
 
 ```bash
 npm install ui-admin-lib
 ```
 
-## Использование
+## Usage
 
-Создайте админ-панель в несколько строк:
+Create an admin panel in a few lines:
 
 ```tsx
 import { AdminPanel, CrudService } from 'ui-admin-lib'
 import 'ui-admin-lib/styles'
 
-// 1. Создайте сервис для работы с API
+// 1. Create a service for working with API
 const userService = new CrudService({
   baseUrl: 'https://api.example.com/users',
-  headers: {
-    'Authorization': 'Bearer YOUR_TOKEN'
-  }
 })
 
-// 2. Определите модель
+// 2. Define a model
 const userModel = {
   name: 'users',
-  label: 'Пользователи',
+  label: 'Users',
   service: userService,
   columns: [
     { key: 'id', title: 'ID', dataIndex: 'id' },
-    { key: 'name', title: 'Имя', dataIndex: 'name' },
+    { key: 'name', title: 'Name', dataIndex: 'name' },
     { key: 'email', title: 'Email', dataIndex: 'email' },
   ],
   fields: [
-    { name: 'name', label: 'Имя', type: 'text', required: true },
+    { name: 'name', label: 'Name', type: 'text', required: true },
     { name: 'email', label: 'Email', type: 'email', required: true },
   ],
 }
 
-// 3. Используйте AdminPanel
+// 3. Use AdminPanel
 function App() {
   return (
     <AdminPanel
-      title="Моя админка"
+      title="My Admin"
       models={[userModel]}
       login={{
         onSubmit: async (username, password) => {
-          // Ваша логика авторизации
+          // Your authorization logic
         },
       }}
     />
@@ -56,23 +53,23 @@ function App() {
 }
 ```
 
-Всё! AdminPanel автоматически создаст:
-- Страницу входа
-- Боковую навигацию
-- Таблицы с данными
-- Формы для создания/редактирования
-- Полный CRUD функционал
+That's it! AdminPanel will automatically create:
+- Login page
+- Sidebar navigation
+- Data tables
+- Create/edit forms
+- Full CRUD functionality
 
-## Полный пример конфигурации
+## Full Configuration Example
 
-Вот полный пример с несколькими моделями и всеми возможностями:
+Here's a complete example with multiple models and all features:
 
 ```tsx
 import { AdminPanel, CrudService, AdminModel } from 'ui-admin-lib'
 import type { Column, FormField } from 'ui-admin-lib'
 import 'ui-admin-lib/styles'
 
-// Типы данных
+// Data types
 interface User {
   id: number
   name: string
@@ -89,22 +86,22 @@ interface Product {
   inStock: boolean
 }
 
-// Создание сервисов для работы с API
+// Create services for working with API
 const userService = new CrudService<User>({
   baseUrl: 'https://api.example.com/users',
   headers: {
     'Authorization': 'Bearer YOUR_TOKEN',
     'Content-Type': 'application/json'
   },
-  // Опционально: кастомные URL для операций
+  // Optional: custom URLs for operations
   getListUrl: () => 'https://api.example.com/users',
   getDetailUrl: (id) => `https://api.example.com/users/${id}`,
   getCreateUrl: () => 'https://api.example.com/users',
   getUpdateUrl: (id) => `https://api.example.com/users/${id}`,
   getDeleteUrl: (id) => `https://api.example.com/users/${id}`,
-  // Опционально: трансформация данных
-  transformRequest: (data) => data, // Преобразование перед отправкой
-  transformResponse: (data) => data, // Преобразование после получения
+  // Optional: data transformation
+  transformRequest: (data) => data, // Transform before sending
+  transformResponse: (data) => data, // Transform after receiving
 })
 
 const productService = new CrudService<Product>({
@@ -114,104 +111,104 @@ const productService = new CrudService<Product>({
   }
 })
 
-// Конфигурация модели пользователей
+// User model configuration
 const userModel: AdminModel<User> = {
   name: 'users',
-  label: 'Пользователи',
+  label: 'Users',
   service: userService,
   columns: [
     { key: 'id', title: 'ID', dataIndex: 'id' },
-    { key: 'name', title: 'Имя', dataIndex: 'name' },
+    { key: 'name', title: 'Name', dataIndex: 'name' },
     { key: 'email', title: 'Email', dataIndex: 'email' },
     {
       key: 'role',
-      title: 'Роль',
+      title: 'Role',
       dataIndex: 'role',
       render: (value) => value.charAt(0).toUpperCase() + value.slice(1),
     },
     {
       key: 'active',
-      title: 'Активен',
+      title: 'Active',
       dataIndex: 'active',
-      render: (value) => (value ? 'Да' : 'Нет'),
+      render: (value) => (value ? 'Yes' : 'No'),
     },
   ] as Column<User>[],
   fields: [
-    { name: 'name', label: 'Имя', type: 'text', required: true, placeholder: 'Введите имя' },
-    { name: 'email', label: 'Email', type: 'email', required: true, placeholder: 'Введите email' },
+    { name: 'name', label: 'Name', type: 'text', required: true, placeholder: 'Enter name' },
+    { name: 'email', label: 'Email', type: 'email', required: true, placeholder: 'Enter email' },
     {
       name: 'role',
-      label: 'Роль',
+      label: 'Role',
       type: 'select',
       required: true,
       options: [
-        { value: 'admin', label: 'Администратор' },
-        { value: 'user', label: 'Пользователь' },
+        { value: 'admin', label: 'Administrator' },
+        { value: 'user', label: 'User' },
       ],
     },
-    { name: 'active', label: 'Активен', type: 'checkbox' },
+    { name: 'active', label: 'Active', type: 'checkbox' },
   ] as FormField[],
-  // Опционально: кастомная функция получения ID
+  // Optional: custom ID getter function
   getItemId: (item) => item.id,
 }
 
-// Конфигурация модели товаров
+// Product model configuration
 const productModel: AdminModel<Product> = {
   name: 'products',
-  label: 'Товары',
+  label: 'Products',
   service: productService,
   columns: [
     { key: 'id', title: 'ID', dataIndex: 'id' },
-    { key: 'title', title: 'Название', dataIndex: 'title' },
+    { key: 'title', title: 'Title', dataIndex: 'title' },
     {
       key: 'price',
-      title: 'Цена',
+      title: 'Price',
       dataIndex: 'price',
-      render: (value) => `${value.toLocaleString('ru-RU')} ₽`,
+      render: (value) => `$${value.toLocaleString('en-US')}`,
     },
-    { key: 'category', title: 'Категория', dataIndex: 'category' },
+    { key: 'category', title: 'Category', dataIndex: 'category' },
     {
       key: 'inStock',
-      title: 'В наличии',
+      title: 'In Stock',
       dataIndex: 'inStock',
-      render: (value) => (value ? 'Да' : 'Нет'),
+      render: (value) => (value ? 'Yes' : 'No'),
     },
   ] as Column<Product>[],
   fields: [
-    { name: 'title', label: 'Название', type: 'text', required: true },
-    { name: 'price', label: 'Цена', type: 'number', required: true },
-    { name: 'category', label: 'Категория', type: 'text', required: true },
-    { name: 'inStock', label: 'В наличии', type: 'checkbox' },
+    { name: 'title', label: 'Title', type: 'text', required: true },
+    { name: 'price', label: 'Price', type: 'number', required: true },
+    { name: 'category', label: 'Category', type: 'text', required: true },
+    { name: 'inStock', label: 'In Stock', type: 'checkbox' },
   ] as FormField[],
 }
 
-// Использование
+// Usage
 function App() {
   return (
     <AdminPanel
-      title="Админ панель"
-      logo={<span>Мой Логотип</span>} // Опционально: кастомный логотип
+      title="Admin Panel"
+      logo={<span>My Logo</span>} // Optional: custom logo
       models={[userModel, productModel]}
       login={{
         onSubmit: async (username, password) => {
-          // Ваша логика авторизации
+          // Your authorization logic
           const response = await fetch('https://api.example.com/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password }),
           })
           if (!response.ok) {
-            throw new Error('Неверное имя пользователя или пароль')
+            throw new Error('Invalid username or password')
           }
           const data = await response.json()
-          // Сохраните токен
+          // Save token
           localStorage.setItem('token', data.token)
         },
       }}
       user={{
-        name: 'Администратор', // Опционально: имя пользователя в header
+        name: 'Administrator', // Optional: user name in header
         onLogout: () => {
-          // Опционально: обработчик выхода
+          // Optional: logout handler
           localStorage.removeItem('token')
         },
       }}
@@ -220,37 +217,37 @@ function App() {
 }
 ```
 
-## Типы полей форм
+## Form Field Types
 
-Поддерживаются следующие типы полей в `FormField`:
+The following field types are supported in `FormField`:
 
-- `text` - Текстовое поле
-- `email` - Email поле
-- `number` - Числовое поле
-- `password` - Поле пароля
-- `textarea` - Многострочное поле
-- `select` - Выпадающий список (требует `options`)
-- `checkbox` - Чекбокс
-- `radio` - Радиокнопки (требует `options`)
+- `text` - Text field
+- `email` - Email field
+- `number` - Number field
+- `password` - Password field
+- `textarea` - Multi-line field
+- `select` - Dropdown list (requires `options`)
+- `checkbox` - Checkbox
+- `radio` - Radio buttons (requires `options`)
 
-Пример конфигурации поля:
+Field configuration example:
 
 ```tsx
 {
-  name: 'fieldName',           // Имя поля (обязательно)
-  label: 'Метка поля',          // Метка поля (обязательно)
-  type: 'text',                 // Тип поля (опционально, по умолчанию 'text')
-  required: true,               // Обязательное поле (опционально)
-  placeholder: 'Подсказка',     // Подсказка (опционально)
-  disabled: false,              // Отключено (опционально)
-  options: [                    // Опции для select/radio (обязательно для этих типов)
-    { value: 'value1', label: 'Метка 1' },
-    { value: 'value2', label: 'Метка 2' },
+  name: 'fieldName',           // Field name (required)
+  label: 'Field Label',        // Field label (required)
+  type: 'text',                // Field type (optional, default 'text')
+  required: true,              // Required field (optional)
+  placeholder: 'Hint',         // Placeholder (optional)
+  disabled: false,             // Disabled (optional)
+  options: [                   // Options for select/radio (required for these types)
+    { value: 'value1', label: 'Label 1' },
+    { value: 'value2', label: 'Label 2' },
   ],
 }
 ```
 
-## Быстрый старт
+## Quick Start
 
 ```bash
 npm install ui-admin-lib
@@ -266,14 +263,14 @@ const userService = new CrudService({
 
 const userModel = {
   name: 'users',
-  label: 'Пользователи',
+  label: 'Users',
   service: userService,
   columns: [
     { key: 'id', title: 'ID', dataIndex: 'id' },
-    { key: 'name', title: 'Имя', dataIndex: 'name' },
+    { key: 'name', title: 'Name', dataIndex: 'name' },
   ],
   fields: [
-    { name: 'name', label: 'Имя', type: 'text', required: true },
+    { name: 'name', label: 'Name', type: 'text', required: true },
   ],
 }
 
@@ -282,9 +279,9 @@ function App() {
 }
 ```
 
-## Демо приложение
+## Demo Application
 
-Запустите демо приложение для просмотра всех возможностей:
+Run the demo application to see all features:
 
 ```bash
 git clone <repository-url>
@@ -293,185 +290,184 @@ npm install
 npm run demo
 ```
 
-Откройте http://localhost:3000 в браузере.
+Open http://localhost:3000 in your browser.
 
-**Вход:**
-- Логин: `admin`
-- Пароль: `admin`
+**Login:**
+- Username: `admin`
+- Password: `admin`
 
-## Основные компоненты
+## Core Components
 
 ### AdminPanel
-Главный компонент для создания админ-панели. Принимает конфигурацию и автоматически создает:
-- Страницу входа
-- Боковую навигацию
-- Таблицы с данными
-- Формы создания/редактирования
-- Операции CRUD (Create, Read, Update, Delete)
+Main component for creating admin panels. Accepts configuration and automatically creates:
+- Login page
+- Sidebar navigation
+- Data tables
+- Create/edit forms
+- CRUD operations (Create, Read, Update, Delete)
 
 ### CrudService
-Утилита для работы с REST API. Поддерживает любые форматы ответов API.
+Utility for working with REST API. Supports any API response formats.
 
-### Низкоуровневые компоненты
+### Low-level Components
 
-### Layout (Макет)
-- `PageLayout` - Основной layout с header, sidebar и content
-- `Header` - Шапка страницы
-- `Sidebar` - Боковая панель
-- `Content` - Основная область контента
+### Layout
+- `PageLayout` - Main layout with header, sidebar and content
+- `Header` - Page header
+- `Sidebar` - Sidebar panel
+- `Content` - Main content area
 
-### Form (Формы)
-- `Button` - Кнопка (варианты: primary, success, danger, ghost)
-- `Input` - Поле ввода текста
-- `Select` - Выпадающий список
-- `Textarea` - Многострочное поле ввода
-- `Checkbox` - Чекбокс
-- `Radio` - Радиокнопка
-- `Label` - Метка для полей формы
+### Form
+- `Button` - Button (variants: primary, success, danger, ghost)
+- `Input` - Text input field
+- `Select` - Dropdown list
+- `Textarea` - Multi-line input field
+- `Checkbox` - Checkbox
+- `Radio` - Radio button
+- `Label` - Form field label
 
-### Table (Таблицы)
-- `DataTable` - Таблица данных с колонками и строками
+### Table
+- `DataTable` - Data table with columns and rows
 
-### Modal (Модальные окна)
-- `Modal` - Модальное окно
+### Modal
+- `Modal` - Modal dialog
 
-### Navigation (Навигация)
-- `Menu` - Меню навигации
-- `Breadcrumbs` - Хлебные крошки
-- `Tabs` - Вкладки
+### Navigation
+- `Menu` - Navigation menu
+- `Breadcrumbs` - Breadcrumb navigation
+- `Tabs` - Tabs
 
-### Utility (Утилиты)
-- `Card` - Карточка
-- `Toast` / `ToastContainer` - Уведомления
-- `Loading` - Индикатор загрузки
-- `Badge` - Значок/бейдж
+### Utility
+- `Card` - Card component
+- `Toast` / `ToastContainer` - Notifications
+- `Loading` - Loading spinner
+- `Badge` - Badge component
 
 ## API Reference
 
 ### AdminPanel
 
-Главный компонент для создания админ-панели.
+Main component for creating admin panels.
 
 ```tsx
 <AdminPanel
-  title?: string              // Заголовок админ-панели (по умолчанию "Админ панель")
-  logo?: React.ReactNode      // Кастомный логотип
-  models: AdminModel[]        // Массив моделей для отображения
-  login?: {                   // Конфигурация авторизации (опционально)
+  title?: string              // Admin panel title (default: "Admin Panel")
+  logo?: React.ReactNode      // Custom logo
+  models: AdminModel[]        // Array of models to display
+  login?: {                   // Authorization configuration (optional)
     onSubmit: (username: string, password: string) => Promise<void> | void
   }
-  user?: {                    // Информация о пользователе (опционально)
-    name?: string             // Имя пользователя в header
-    onLogout?: () => void     // Обработчик выхода
+  user?: {                    // User information (optional)
+    name?: string             // User name in header
+    onLogout?: () => void     // Logout handler
   }
 />
 ```
 
 ### AdminModel
 
-Конфигурация модели данных.
+Data model configuration.
 
 ```tsx
 interface AdminModel<T = any> {
-  name: string                           // Уникальное имя модели
-  label: string                          // Отображаемое название
-  service: CrudService<T>                // Сервис для работы с API
-  columns: Column<T>[]                   // Колонки таблицы
-  fields: FormField[]                    // Поля формы
-  getItemId?: (item: T) => string | number  // Функция получения ID (опционально)
+  name: string                           // Unique model name
+  label: string                          // Display name
+  service: CrudService<T>                // Service for working with API
+  columns: Column<T>[]                   // Table columns
+  fields: FormField[]                    // Form fields
+  getItemId?: (item: T) => string | number  // ID getter function (optional)
 }
 ```
 
 ### CrudService
 
-Класс для работы с REST API.
+Class for working with REST API.
 
 ```tsx
 new CrudService<T>({
-  baseUrl: string                        // Базовый URL API
-  getListUrl?: (params?: any) => string  // URL для получения списка (опционально)
-  getDetailUrl?: (id) => string          // URL для получения элемента (опционально)
-  getCreateUrl?: () => string            // URL для создания (опционально)
-  getUpdateUrl?: (id) => string          // URL для обновления (опционально)
-  getDeleteUrl?: (id) => string          // URL для удаления (опционально)
-  transformRequest?: (data) => any       // Трансформация запроса (опционально)
-  transformResponse?: (data) => T        // Трансформация ответа (опционально)
-  headers?: Record<string, string>       // Заголовки запросов (опционально)
+  baseUrl: string                        // Base API URL
+  getListUrl?: (params?: any) => string  // URL for getting list (optional)
+  getDetailUrl?: (id) => string          // URL for getting item (optional)
+  getCreateUrl?: () => string            // URL for creating (optional)
+  getUpdateUrl?: (id) => string          // URL for updating (optional)
+  getDeleteUrl?: (id) => string          // URL for deleting (optional)
+  transformRequest?: (data) => any       // Request transformation (optional)
+  transformResponse?: (data) => T        // Response transformation (optional)
+  headers?: Record<string, string>       // Request headers (optional)
 })
 ```
 
-Методы:
-- `getList(params?)` - Получить список элементов
-- `getDetail(id)` - Получить элемент по ID
-- `create(data)` - Создать новый элемент
-- `update(id, data)` - Обновить элемент
-- `delete(id)` - Удалить элемент
+Methods:
+- `getList(params?)` - Get list of items
+- `getDetail(id)` - Get item by ID
+- `create(data)` - Create new item
+- `update(id, data)` - Update item
+- `delete(id)` - Delete item
 
 ### Column
 
-Конфигурация колонки таблицы.
+Table column configuration.
 
 ```tsx
 interface Column<T> {
-  key: string                            // Уникальный ключ колонки
-  title: string                          // Заголовок колонки
-  dataIndex?: string                     // Поле данных для отображения
-  render?: (value: any, record: T, index: number) => React.ReactNode  // Кастомный рендер
-  width?: number | string                // Ширина колонки
-  align?: 'left' | 'center' | 'right'   // Выравнивание
+  key: string                            // Unique column key
+  title: string                          // Column title
+  dataIndex?: string                     // Data field to display
+  render?: (value: any, record: T, index: number) => React.ReactNode  // Custom render
+  width?: number | string                // Column width
+  align?: 'left' | 'center' | 'right'   // Alignment
 }
 ```
 
 ### FormField
 
-Конфигурация поля формы.
+Form field configuration.
 
 ```tsx
 interface FormField {
-  name: string                           // Имя поля
-  label: string                          // Метка поля
+  name: string                           // Field name
+  label: string                          // Field label
   type?: 'text' | 'email' | 'number' | 'password' | 'textarea' | 'select' | 'checkbox' | 'radio'
-  options?: Array<{ value: string | number; label: string }>  // Опции для select/radio
-  required?: boolean                     // Обязательное поле
-  placeholder?: string                   // Подсказка
-  disabled?: boolean                     // Отключено
+  options?: Array<{ value: string | number; label: string }>  // Options for select/radio
+  required?: boolean                     // Required field
+  placeholder?: string                   // Placeholder
+  disabled?: boolean                     // Disabled
 }
 ```
 
-## Разработка
+## Development
 
 ```bash
-# Установка зависимостей
+# Install dependencies
 npm install
 
-# Сборка библиотеки
+# Build library
 npm run build
 
-# Запуск демо приложения
+# Run demo application
 npm run demo
 
-# Линтинг
+# Linting
 npm run lint
 ```
 
-## Публикация в npm
+## Publishing to npm
 
 ```bash
-# Убедитесь что все изменения закоммичены
+# Make sure all changes are committed
 git add .
 git commit -m "Prepare for release"
 
-# Обновите версию (если нужно)
-npm version patch  # или minor, major
+# Update version (if needed)
+npm version patch  # or minor, major
 
-# Соберите библиотеку
+# Build library
 npm run build
 
-# Опубликуйте
+# Publish
 npm publish
 ```
 
-## Лицензия
+## License
 
 MIT
-

@@ -1,5 +1,5 @@
 import React from 'react'
-import { AdminPanel } from '../../src/index'
+import { AdminPanel } from 'ui-admin-lib'
 import { userModel, productModel } from './config'
 
 function App() {

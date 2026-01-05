@@ -1,7 +1,7 @@
 {
   "name": "ui-admin-lib",
-  "version": "1.0.0",
-  "description": "UI библиотека для создания административных панелей на React",
+  "version": "1.1.0",
+  "description": "Library for quickly creating admin panels in React with full CRUD functionality",
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
   "types": "./dist/index.d.ts",

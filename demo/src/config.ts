@@ -1,5 +1,5 @@
-import { AdminModel, CrudService } from '../../src/index'
-import type { Column, FormField } from '../../src/index'
+import { AdminModel, CrudService } from 'ui-admin-lib'
+import type { Column, FormField } from 'ui-admin-lib'
 
 // Типы данных
 interface User {
